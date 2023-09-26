@@ -13,6 +13,7 @@
         <title>Principal</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/e153d37948.js" crossorigin="anonymous"></script>
     </head>
     <body>
         
@@ -36,26 +37,26 @@
                                     <div class="card-body">
                                        <h5 class="card-tittle">Insertar Perro</h5>
                                         <div class="card-text">
-                                            <form action="SvPerro" method="POST">
+                                            <form action="SvPerro" method="POST" enctype="multipart/form-data">
                                                 <div class="mb-3">
                                                     <label for="nombre" class="form-label">Nombre</label>
-                                                    <input class="form-control" type="text" name="nombre">
+                                                    <input class="form-control" type="text" name="nombre"required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="raza" class="form-label">Raza</label> <br>
-                                                    <input class="form-control" type="text" name="raza">
+                                                    <input class="form-control" type="text" name="raza"required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="fileFoto" class="form-label">Foto</label>
-                                                    <input class="form-control" type="file" name="fileFoto">
+                                                    <input class="form-control" type="file" name="fileFoto"required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="puntos" class="form-label">Puntos</label>
-                                                    <input class="form-control form-control-sm" name="puntos" type="text">
+                                                    <input class="form-control form-control-sm" name="puntos" type="text"required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="edad" class="form-label">Edad</label> <br>
-                                                    <input class="form-control" type="text" name="edad" >
+                                                    <input class="form-control" type="text" name="edad" required>
                                                 </div>
                                                 <input type= "submit" class= "btn btn-warning" value= "Ingresar perrito" >
 
@@ -108,10 +109,17 @@
                                 <tr>
                                     <th scope="row"><%= perro.getNombre() %></th>
                                     <td><%= perro.getRaza() %></td>
-                                    <td><%= perro.getImagen() %></td>
+                                    <td><%= perro.getImagen()%></td>
                                     <td><%= perro.getPuntos() %></td>
                                     <td><%= perro.getEdad() %></td>
-                                    <td>accion</td>
+                                    <td>
+                                        
+                                        <a href="SvPerro?id=<%=perro.getNombre()%>"  <i class="fa-solid fa-eye"> </i>
+                                        <-<!-- PENDIENTE  -->
+                                         <i class="fa-solid fa-pencil"></i>
+                                            <i class="fa-solid fa-trash"></i>
+                                            
+                                        </td>
                                 </tr>
 
                                 <%}}%>
@@ -122,7 +130,23 @@
                 </div> 
             </section>
         </div>
-                
+                <div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
         <%@include file = "templates/footer.jsp" %>
     </body>
 </html>
