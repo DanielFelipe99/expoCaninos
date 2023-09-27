@@ -16,18 +16,19 @@
         <script src="https://kit.fontawesome.com/e153d37948.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        
+
         <%@include file = "templates/header.jsp" %>
-          
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-        
-        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
         <h1>¡Bienvenidos!</h1>
-        
-        
+
+
         <div class="container">
-            
-            
+
+
             <section class="mt-5 mb-5 " id="formulario">
                 <div class="row">
                     <div class="col-md-4">
@@ -35,7 +36,7 @@
                             <div class="row g-0">
                                 <div class="col-md-12">
                                     <div class="card-body">
-                                       <h5 class="card-tittle">Insertar Perro</h5>
+                                        <h5 class="card-tittle">Insertar Perro</h5>
                                         <div class="card-text">
                                             <form action="SvPerro" method="POST" enctype="multipart/form-data">
                                                 <div class="mb-3">
@@ -72,15 +73,15 @@
 
                     </div>
 
-                
-                
+
+
                     <div class="col-md-8">
-                        
-                        <% 
-                            List<Perro> miPerro= (List<Perro>) request.getAttribute("listaEntregada");
+
+                        <%
+                            List<Perro> miPerro = (List<Perro>) request.getAttribute("listaEntregada");
                             if (miPerro == null) {
-                                    // Mostrar un mensaje de error al usuario
-                                    request.setAttribute("error", "La lista de perros está vacía.");
+                                // Mostrar un mensaje de error al usuario
+                                request.setAttribute("error", "La lista de perros está vacía.");
 
                             }
                         %>
@@ -97,56 +98,90 @@
                                 </tr>
                             </thead>
                             </thead>
-                            
+
                             <tbody>
-                                
-                                    <% 
-                                          if(miPerro!=null){
-                                                for (Perro perro : miPerro) { 
-                                                 
-                                    %>
-                                           
+
+                                <%
+                                    if (miPerro != null) {
+                                        for (Perro perro : miPerro) {
+
+                                %>
+
                                 <tr>
-                                    <th scope="row"><%= perro.getNombre() %></th>
-                                    <td><%= perro.getRaza() %></td>
+                                    <th scope="row"><%= perro.getNombre()%></th>
+                                    <td><%= perro.getRaza()%></td>
                                     <td><%= perro.getImagen()%></td>
-                                    <td><%= perro.getPuntos() %></td>
-                                    <td><%= perro.getEdad() %></td>
-                                    <td>
-                                        
-                                        <a href="SvPerro?id=<%=perro.getNombre()%>"  <i class="fa-solid fa-eye"> </i>
-                                        <-<!-- PENDIENTE  -->
-                                         <i class="fa-solid fa-pencil"></i>
-                                            <i class="fa-solid fa-trash"></i>
-                                            
-                                        </td>
+                                    <td><%= perro.getPuntos()%></td>
+                                    <td><%= perro.getEdad()%></td>
+                                    <td><a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-nombre="<%= perro.getNombre()%>"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-nombre="<%= perro.getRaza()%>"><i class="fa-solid fa-pencil"></i></a>
+                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-nombre="<%= perro.getImagen()%>"><i class="fa-solid fa-trash"></i></a>
+                                    </td>
                                 </tr>
+                                <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Detalles del Perro</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="perro-details">
 
-                                <%}}%>
-                            </tbody>
-                        </table>
 
-                    </div>
-                </div> 
-            </section>
-        </div>
-                <div class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-        <%@include file = "templates/footer.jsp" %>
-    </body>
-</html>
+                                            </div>  
+
+                                            <div class="modal" tabindex="-1">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Modal title</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Modal body text goes here.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%}
+                                    }%>
+                                            </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div> 
+                                    </section>
+                                </div>
+                                Ubicarla al final de la pagina index.jsp
+                                
+                                <script>
+                                    // funcion para mostrar los datos en la ventana modal
+                                    $('#exampleModal').on('show.bs.modal', function (event) {
+                                        var button = $(event.relatedTarget); // Botón que desencadenó el evento
+                                        var nombre = button.data('nombre'); // Obtén el nombre del perro
+
+                                        // Realiza una solicitud AJAX al servlet para obtener los detalles del perro por su nombre
+                                        $.ajax({
+                                            url: 'SvPerro?nombre=' + nombre, // Cambia 'id' por el nombre del parámetro que esperas en tu servlet
+                                            method: 'GET',
+                                            success: function (data) {
+                                                // Actualiza el contenido del modal con los detalles del perro
+                                                $('#perro-details').html(data);
+                                            },
+                                            error: function () {
+                                                // Maneja errores aquí si es necesario
+                                                console.log('Error al cargar los detalles del perro.');
+                                            }
+                                        });
+                                    });
+
+                                </script>
+                                <%@include file = "templates/footer.jsp" %>
+                                </body>
+                                </html>

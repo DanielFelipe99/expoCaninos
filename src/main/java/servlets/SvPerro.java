@@ -39,13 +39,45 @@ public class SvPerro extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
+    public void init(){
+    
+    
+    }
+    
+    private Perro buscarPerroPorNombre(String nombre){
+        for(Perro perro: miPerro){
+            if(perro.getNombre().equals(nombre)){
+                return perro;
+            
+            }
 
+        }
+        return null;
+    
+    
+    }
    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String nombre = request.getParameter("nombre");
+        //System.out.println(nombre);
+        Perro perro = buscarPerroPorNombre(nombre); // Implementa la lógica para buscar el perro en tu lista de perros
+        if (perro != null) {
+            // Genera la respuesta HTML con los detalles del perro
+            String perroHtml = "<h2>Nombre: " + perro.getNombre() + "</h2>"
+                    + "<p>Raza: " + perro.getRaza() + "</p>"
+                    + "<p>Puntos: " + perro.getPuntos() + "</p>"
+                    + "<p>Edad (meses): " + perro.getEdad() + "</p>"
+                    + "<img src='imagenes/" + perro.getImagen() + "' alt='" + perro.getNombre() + "' width='100%'/>";
+            response.setContentType("text/html");
+            response.getWriter().write(perroHtml);
+        } else {
+            // Maneja el caso en el que no se encuentra el perro
+            response.setContentType("text/plain");
+            response.getWriter().write("Perro no encontrado");
+        }
         
-   
     }
 
   
