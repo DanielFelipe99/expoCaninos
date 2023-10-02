@@ -18,17 +18,13 @@
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Buscar por</a>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Nombre</a></li>
+      <li><input class="dropdown" type="search" placeholder = "Nombre"></li>
+      <li><button class="btn btn-warning" type = "submit">Buscar</button></li>
       <li><a class="dropdown-item" href="#">Puntos</a></li>
-      <li><a class="dropdown-item" href="#">Something else her</a></li>
-      <li><hr class="dropdown-divider"></li>
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Mostrar perros registrados</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+    <a class="nav-link">Mostrar perros registrados</a>
   </li>
 </ul>
             <img src="imagenes/expoImagen.jpeg" alt="Perros" style="width: 100%;" />

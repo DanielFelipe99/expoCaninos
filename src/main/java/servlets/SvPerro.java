@@ -39,7 +39,9 @@ public class SvPerro extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
-    public void init(){
+
+    @Override
+    public void init() throws ServletException{
     
     
     }
