@@ -23,9 +23,6 @@
       <li><a class="dropdown-item" href="#">Puntos</a></li>
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link">Mostrar perros registrados</a>
-  </li>
 </ul>
             <img src="imagenes/expoImagen.jpeg" alt="Perros" style="width: 100%;" />
             <script src =" scripts/script.js" type =" text/javascript"></script>

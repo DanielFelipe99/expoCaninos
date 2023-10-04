@@ -4,6 +4,8 @@
     Author     : daniel
 --%>
 
+<%@page import="com.mycompany.expocaninos.ExposicionPerro"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.mycompany.expocaninos.Perro"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -89,7 +91,9 @@
                     <div class="col-md-8">
 
                         <%
-                            List<Perro> miPerro = (List<Perro>) request.getAttribute("listaEntregada");
+                            ServletContext context = request.getServletContext();
+                            ArrayList<Perro> miPerro = ExposicionPerro.mostrarPerros(context);
+                           
                             if (miPerro == null) {
                                 // Mostrar un mensaje de error al usuario
                                 request.setAttribute("error", "La lista de perros está vacía.");
@@ -125,53 +129,73 @@
                                     <td><%= perro.getPuntos()%></td>
                                     <td><%= perro.getEdad()%></td>
                                     <td><a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-nombre="<%= perro.getNombre()%>"><i class="fa-solid fa-eye"></i></a>
-                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-nombre="<%= perro.getRaza()%>"><i class="fa-solid fa-pencil"></i></a>
-                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-nombre="<%= perro.getImagen()%>"><i class="fa-solid fa-trash"></i></a>
+                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="" data-nombre="<%= perro.getNombre()%>"><i class="fa-solid fa-pencil"></i></a>
+                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-nombre="<%= perro.getNombre()%>"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
-                                <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Detalles del Perro</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div id="perro-details">
-
-
-                                            </div>  
-
-                                            <div class="modal" tabindex="-1">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Modal title</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>Modal body text goes here.</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                              
                                             <%}
                                     }%>
                                             </tbody>
                                             </table>
+                                            
+                                            
+                                            
+                                            
+                                         
+                            
+                                     
+                                            
+                                            <!-- Modal de eliminación -->
+                                            <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog"  >
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar Perro</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>¿Estás seguro de que deseas eliminar el perro con el nombre <span id="nombrePerro"></span>?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <!-- Botón de confirmación de eliminación -->
+                                                            <button type="submit" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                            
+                                                            
+                                                               <!-- Modal Ver -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Detalles del Perro</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div id="perro-details">
+                                                                <!-- Contenido del modal de detalles -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          
 
+                                            
                                         </div>
                                     </div> 
                                     </section>
                                 </div>
-                                
-                                
-                                <script>
+                                            
+                                            
+                                            
+                                            
+                                  <script>
                                     // funcion para mostrar los datos en la ventana modal
                                     $('#exampleModal').on('show.bs.modal', function (event) {
                                         var button = $(event.relatedTarget); // Botón que desencadenó el evento
@@ -193,6 +217,43 @@
                                     });
 
                                 </script>
+                                            
+                                    <script>
+// Función para mostrar el modal de eliminación cuando se hace clic en el botón de eliminar
+$('.btn.btn-warning').on('click', function() {
+    const nombre = $(this).data('nombre');
+    $('#nombrePerro').text(nombre); // Actualiza el nombre del perro en el modal
+    $('#eliminarModal').modal('show');
+    // Puedes pasar el nombre o cualquier otro identificador necesario al modal de eliminación.
+});
+
+// Cuando se confirma la eliminación, ejecuta el método POST utilizando AJAX
+$('#confirmarEliminar').on('click', function() {
+    const nombre = $('#nombrePerro').text(); // Obtiene el nombre del perro del modal
+    // Realiza una solicitud AJAX para eliminar el perro por su nombre
+    $.ajax({
+        url: 'SvEliminar?nombre=' + nombre, // Cambia por la URL correcta de tu servlet
+        method: 'POST', // Utiliza POST para operaciones de eliminación
+        success: function (data) {
+            // Maneja la respuesta después de la eliminación (por ejemplo, recargar la página o actualizar la tabla)
+            console.log('Perro eliminado con éxito.');
+            $('#eliminarModal').modal('hide'); // Cierra el modal de eliminación
+        },
+        error: function () {
+            // Maneja errores aquí si es necesario
+            console.log('Error al eliminar el perro.');
+        }
+    });
+});
+                                    </script>
+                                
+                          
+                                
+                            
+
+                                
+                                
+                                
                                 <%@include file = "templates/footer.jsp" %>
                                 </body>
                                 </html>

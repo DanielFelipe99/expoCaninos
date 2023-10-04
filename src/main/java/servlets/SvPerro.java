@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import com.mycompany.expocaninos.ExposicionPerro;
 import com.mycompany.expocaninos.Perro;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,6 +20,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -46,25 +48,14 @@ public class SvPerro extends HttpServlet {
     
     }
     
-    private Perro buscarPerroPorNombre(String nombre){
-        for(Perro perro: miPerro){
-            if(perro.getNombre().equals(nombre)){
-                return perro;
-            
-            }
 
-        }
-        return null;
-    
-    
-    }
    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nombre = request.getParameter("nombre");
         //System.out.println(nombre);
-        Perro perro = buscarPerroPorNombre(nombre); // Implementa la lógica para buscar el perro en tu lista de perros
+        Perro perro = ExposicionPerro.buscarPerroPorNombre(nombre); // Implementa la lógica para buscar el perro en tu lista de perros
         if (perro != null) {
             // Genera la respuesta HTML con los detalles del perro
             String perroHtml = "<h2>Nombre: " + perro.getNombre() + "</h2>"
@@ -118,6 +109,26 @@ public class SvPerro extends HttpServlet {
        //  String imagen= request.getParameter("fileFoto");
          String puntos = request.getParameter("puntos");
          String edad = request.getParameter("edad");
+         
+         
+         try {
+            Perro perro = new Perro (nombre, raza, fileName, puntos, edad);   
+            ServletContext servletContext = getServletContext();
+            miPerro = ExposicionPerro.mostrarPerros(servletContext);
+            miPerro.add(perro);
+            ExposicionPerro.agregarPerro(miPerro, servletContext);
+            request.setAttribute("miPerro", miPerro);
+            
+            
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+           } catch (IOException | ClassNotFoundException ex) {
+               
+           }
+         
+         
+         
+         
+         /**
          //creacion del objeto 
          Perro perro = new Perro (nombre, raza, fileName, puntos, edad);   
          //se añade el objeto a la lista
@@ -149,7 +160,7 @@ public class SvPerro extends HttpServlet {
            //sirve para que la pagina no se rediriga a otra parte 
            request.getRequestDispatcher("index.jsp").forward(request, response);
            
-           
+           **/
            }
 
     
