@@ -130,7 +130,7 @@
                                     <td><%= perro.getEdad()%></td>
                                     <td><a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-nombre="<%= perro.getNombre()%>"><i class="fa-solid fa-eye"></i></a>
                                         <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="" data-nombre="<%= perro.getNombre()%>"><i class="fa-solid fa-pencil"></i></a>
-                                        <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#eliminarModal" data-nombre="<%= perro.getNombre()%>"><i class="fa-solid fa-trash"></i></a>
+                                        <a href="#" class="btn btn-warning eliminar"  data-borrar="<%= perro.getNombre()%>"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
                               
@@ -138,32 +138,7 @@
                                     }%>
                                             </tbody>
                                             </table>
-                                            
-                                            
-                                            
-                                            
-                                         
-                            
-                                     
-                                            
-                                            <!-- Modal de eliminación -->
-                                            <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog"  >
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar Perro</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>¿Estás seguro de que deseas eliminar el perro con el nombre <span id="nombrePerro"></span>?</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <!-- Botón de confirmación de eliminación -->
-                                                            <button type="submit" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                            
-                                                            
-                                                               <!-- Modal Ver -->
+                                                           <!-- Modal Ver -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -179,11 +154,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                  
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                        
+
                                           
 
                                             
@@ -192,7 +164,33 @@
                                     </section>
                                 </div>
                                             
-                                            
+                                            <script>
+                                                $('.eliminar').click(function(){
+                                                    var borrar = $(this).data('borrar');
+                                                    console.log(borrar);
+                                                    var resultado = window.confirm("¿Estás seguro de que deseas continuar?");
+
+                                                    // Comprueba si se hizo clic en "Aceptar" o "Cancelar"
+                                                    if (resultado) {
+                                                         alert("Se ha eliminado: " + borrar);
+                                                        $.ajax({
+                                                            
+                                                            url: 'SvEliminar?nombre='+ borrar,
+                                                            method: 'POST',
+                                                            success: function(){
+                                                                console.log("Aqui estoy"),
+                                                                window.location.href= 'index.jsp';
+                                                            },
+                                                            error: function(){
+                                                                console.log("paila");
+                                                            }
+                                                        });
+                                                       
+                                                    } else {
+                                                        alert("¡Has hecho clic en Cancelar!");
+                                                    }
+                                                });
+                                            </script>
                                             
                                             
                                   <script>
@@ -246,14 +244,7 @@ $('#confirmarEliminar').on('click', function() {
     });
 });
                                     </script>
-                                
-                          
-                                
-                            
 
-                                
-                                
-                                
                                 <%@include file = "templates/footer.jsp" %>
                                 </body>
                                 </html>

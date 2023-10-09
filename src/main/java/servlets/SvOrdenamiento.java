@@ -5,58 +5,48 @@
 package servlets;
 
 import com.mycompany.expocaninos.ExposicionPerro;
-import com.mycompany.expocaninos.Perro;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static jdk.jpackage.internal.Arguments.CLIOptions.context;
 
 /**
  *
  * @author danie
  */
-@WebServlet(name = "SvEliminar", urlPatterns = {"/SvEliminar"})
-public class SvEliminar extends HttpServlet {
+@WebServlet(name = "SvOrdenamiento", urlPatterns = {"/SvOrdenamiento"})
+public class SvOrdenamiento extends HttpServlet {
 
-  
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-  
+ 
     }
 
-
+  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
         
-        
+
     }
 
-
+ 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         ServletContext context = getServletContext();
-        System.out.println("hola");
-            String nombre = request.getParameter("nombre");
-            ExposicionPerro.eliminarUnPerro( context, nombre);
-            
-            
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-       
-        
+        String recibido = request.getParameter("value");
+        System.out.println(recibido);
+        ExposicionPerro.ordenar(recibido,  context);
+     
     }
-    
 
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";

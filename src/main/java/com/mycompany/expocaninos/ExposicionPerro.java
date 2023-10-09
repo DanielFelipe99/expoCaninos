@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.servlet.ServletContext;
 import static jdk.jpackage.internal.Arguments.CLIOptions.context;
 
@@ -25,17 +27,56 @@ public class ExposicionPerro {
     public ExposicionPerro(){
         
     }
-    public void ordenarPorRaza(){
-        
+
+    public static void ordenar(String ordenar, ServletContext context ) throws IOException{
+        System.out.println("aqui estoy");
+     switch(ordenar){
+            case "puntos":
+               // Define un comparador para ordenar por puntos
+                Comparator<Perro> comparador = Comparator.comparing(Perro::getPuntos);
+              
+
+                // Ordena la lista de perros usando el comparador
+                Collections.sort(miPerro, comparador);
+                eliminarPerro( context );
+                agregarPerro(miPerro, context);
+                // Opcional: Puedes imprimir la lista ordenada si lo deseas
+                /*for (Perro perro : listarPerros) {
+                    System.out.println("Nombre: " + perro.getNombre() + ", Puntos: " + perro.getPuntos());
+                }*/
+            break;
+            
+            case "nombre":
+                // Define un comparador para ordenar alfabéticamente por nombre
+                Comparator<Perro> comparadorNombre = Comparator.comparing(Perro::getNombre);
+
+                // Ordena la lista de perros usando el comparador
+                Collections.sort(miPerro, comparadorNombre);
+                eliminarPerro(context );
+                agregarPerro(miPerro, context);
+                // Opcional: Puedes imprimir la lista ordenada si lo deseas
+               /* for (Perro perro : listarPerros) {
+                    System.out.println("Nombre: " + perro.getNombre());
+                }*/
+               
+            break;
+            
+            case "raza":
+                // Define un comparador para ordenar alfabéticamente por raza
+                Comparator<Perro> comparadorraza = Comparator.comparing(Perro::getRaza);
+
+                // Ordena la lista de perros usando el comparador
+              Collections.sort(miPerro, comparadorraza);
+                eliminarPerro( context );
+                agregarPerro(miPerro, context);
+                
+                // Opcional: Puedes imprimir la lista ordenada si lo deseas
+                /*for (Perro perro : listarPerros) {
+                    System.out.println("Raza: " + perro.getRaza());
+                }*/
+               
+            break;
     }
-    public void ordenarPorNombre(){
-        
-    }
-    public void ordenarPorPuntos(){
-        
-    }
-    public void ordenarPorEdad(){
-        
     }
     public int buscarPerro(){
         
@@ -93,33 +134,38 @@ public class ExposicionPerro {
        return miPerro;
     }
     
-    public static void eliminarPerro(ArrayList<Perro> misPerros, ServletContext context) throws IOException {
+  
+       public static void eliminarPerro(ServletContext context) throws IOException {
+
+        //Definimos una ruta para buscar nuestro archivo perro.ser
         String relativePath = "datosPerros.txt";
         String absPath = context.getRealPath(relativePath);
         File archivo = new File(absPath);
+        
+        try {
+            // Crear un archivo para guardar la lista de perros serializada
+            FileOutputStream datosPerro = new FileOutputStream(archivo);
+            ObjectOutputStream escribirPerro = new ObjectOutputStream(datosPerro);
+            escribirPerro.writeObject("");
+            escribirPerro.close();
+            
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al guardar los datos de perro: " + e.getMessage());
+        }
 
-    try {
-        FileInputStream datosPerrosStream = new FileInputStream(archivo);
-        ObjectInputStream leerPerro = new ObjectInputStream(datosPerrosStream);
-
-        @SuppressWarnings("unchecked")
-        ArrayList<Perro> perrosGuardados = (ArrayList<Perro>) leerPerro.readObject();
-        leerPerro.close();
-
-        // Eliminar el perro de la lista
-        perrosGuardados.removeAll(misPerros);
-
-        FileOutputStream datosPerros = new FileOutputStream(archivo);
-        ObjectOutputStream escribirPerro = new ObjectOutputStream(datosPerros);
-        escribirPerro.writeObject(perrosGuardados);
-        escribirPerro.close();
-
-        System.out.println("Datos eliminados y guardados: " + relativePath);
-    } catch (IOException | ClassNotFoundException e) {
-        e.printStackTrace();
-        System.out.println("Los datos no han sido eliminados: " + e.getMessage());
     }
-}
+       
+       public static void eliminarUnPerro(ServletContext context , String nombre) throws IOException{
+          Perro perroUnico = buscarPerroPorNombre(nombre);
+          miPerro.remove(perroUnico);
+          eliminarPerro(context);
+          agregarPerro(miPerro, context);
+          
+       
+       }
+
     public int buscarPerroMayorPuntaje(){
         
         return 0;
